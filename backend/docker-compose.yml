@@ -15,8 +15,8 @@ services:
     ports:
       - "3000:3000"
     env_file: 
-      - .env-docker
+      - .env.docker
     depends_on:
       - db
-    volumes:
-      mongo-db:
+volumes:
+  mongo-db:

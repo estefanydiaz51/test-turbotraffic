@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppController } from '../controllers/app.controller';
-import { AppService } from '../services/app.service';
 import { AuthModule } from './auth/auth.module';
 import { configLoader } from '../../config-loader'
 import { envSchema } from 'src/schemas/joi/env.schema';
@@ -26,7 +24,6 @@ import { envSchema } from 'src/schemas/joi/env.schema';
       validationSchema: envSchema,
     })
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}

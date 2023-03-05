@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  db:
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=auth
+    volumes:
+      - ./mongo-db:/data/db
+    ports:
+      - "27017:27017"
+  api: 
+    container_name: nestjs-docker-api
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    env_file: 
+      .env

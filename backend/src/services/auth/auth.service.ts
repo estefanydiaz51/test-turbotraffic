@@ -20,16 +20,21 @@ export class AuthService {
       throw new HttpException({
         status: HttpStatus.FORBIDDEN,
         error: 'Server Error'},
-        HttpStatus.FORBIDDEN, {
-          cause: error
-        })
+        HttpStatus.FORBIDDEN)
     }
   }
 
   async createUser( createUserDto: createUserDto) {
    try{
-    const { name } = createUserDto
-    const findUser = await this.userRepository.findOne({name : name})
+    const { name } = createUserDto;
+    const findUser = await this.userRepository.findOne({name : name});
+
+    if(name === 'Alejandro'){
+      createUserDto.role = 'admin';
+    } else{
+      createUserDto.role = 'user';
+    }
+
     if(findUser) {
       throw new HttpException({
         status: HttpStatus.FORBIDDEN,
@@ -37,21 +42,25 @@ export class AuthService {
         HttpStatus.FORBIDDEN
       )
     }
-    const newUser = await this.userRepository(createUserDto)
-    const token = this.jwtAuthService.sign(createUserDto)
+    const newUser = await this.userRepository(createUserDto);
+    const token = this.jwtAuthService.sign({
+      name: newUser.name,
+      role: newUser.role
+    });
+
     await newUser.save()
+
     const resp = {
       ...createUserDto,
       token
     }
     return resp
    } catch(error){
+    
      throw new HttpException({
       status: HttpStatus.FORBIDDEN,
       error: 'El usuario ya existe'},
-      HttpStatus.FORBIDDEN, {
-        cause: error
-      }
+      HttpStatus.FORBIDDEN
     )
    }
   }
@@ -66,7 +75,10 @@ export class AuthService {
           HttpStatus.FORBIDDEN)
       }
 
-      const token = this.jwtAuthService.sign({user})
+      const token = this.jwtAuthService.sign({
+        name: user.name,
+        role: user.role
+      })
       const resp = {
         id: user.id,
         name: user.name,
@@ -78,9 +90,7 @@ export class AuthService {
       throw new HttpException({
         status: HttpStatus.FORBIDDEN,
         error: 'Usuario no encontrado'},
-        HttpStatus.FORBIDDEN, {
-          cause: error
-        })
+        HttpStatus.FORBIDDEN)
     }
   }
 }

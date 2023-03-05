@@ -6,18 +6,36 @@ import { AuthSchema, Auth } from 'src/schemas/auth.schema';
 import { AuthService } from 'src/services/auth/auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/strategy/jwt.strategy';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from 'src/guardians/roles.guard';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
 
 
 @Module({
   imports: [
+    ConfigModule,
     MongooseModule.forFeature([{ name: Auth.name ,schema: AuthSchema}]),
-    JwtModule.register({
-      secret: 'SECRET_JWT',
-      signOptions: { expiresIn: '20h'}
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get('jwt.secret'),
+        signOptions: { expiresIn: '20h'}
+      }),
+      
     }),
-    PassportModule
+    PassportModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [
+    AuthService, 
+    JwtStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    }
+  ],
 })
 export class AuthModule {}

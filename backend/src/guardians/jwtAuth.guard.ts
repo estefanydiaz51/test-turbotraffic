@@ -8,7 +8,6 @@ export class JwtAuthGuard extends AuthGuard('jwt'){
     if(err || !user){
       throw err || new UnauthorizedException('No estas authenticado')
     }
-    console.log(user)
     return user
   }
 }

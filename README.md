@@ -4,6 +4,7 @@
 
 ## Para correr el frontend
 ```
+npm i
 npm run build && npm start
 ```
 

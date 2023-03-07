@@ -1,0 +1,9 @@
+body{
+  margin: 0;
+  font-family: 'Roboto';
+  max-width: 2000px;
+}
+
+.css-19z1ozs-MuiPaper-root-MuiAppBar-root {
+  width: calc(100% - 240px) !important;
+}

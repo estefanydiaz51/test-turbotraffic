@@ -70,4 +70,17 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+# Prueba tecnica turbotraffic
+* Aplicacion de backend hecha con nest con ruta de registro, login, rutas protegidas, lista de usuarios
+
+
+## Para correr el backend
+```
+npm run build && npm start
+```
+
+## Para correr el backend con docker
+
+```
+docker-compose up -d 
+```

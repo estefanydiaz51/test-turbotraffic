@@ -1,13 +1,14 @@
 
 import { Box } from '@mui/material'
+import { FC } from 'react'
 import CmsNavigator from '../CmsNavigator'
 
 
-type NavigatorProps = {
-  children: React.ReactNode
+interface NavigatorProps {
+  children: JSX.Element
 }
 
-function CmsDashboard ({ children }: NavigatorProps) {
+const CmsDashboard: FC<NavigatorProps> = ({ children }) => {
   return (
     <Box sx={{ display: 'flex'}}>
       <CmsNavigator>

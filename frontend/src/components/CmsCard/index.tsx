@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { FC } from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
@@ -10,7 +10,7 @@ interface CmsCardProps {
   role: string,
 }
 
-function CmsCard({name, role}: CmsCardProps) {
+const CmsCard: FC<CmsCardProps> = ({name, role}) => {
   return (
     <Card 
       sx={{ maxWidth: 345, 

@@ -1,22 +1,91 @@
-import useForm from "@/hooks/useForm"
 import { Box, Button, TextField, Typography } from "@mui/material"
 import Link from "next/link"
+import { FC, useEffect, useState } from "react"
 
-
+interface Error {
+  state: boolean,
+  text: string
+}
 interface CmsFormProps {
   isLogged: boolean,
+  error: Error,
   onSubmit: (value: string) => void
 }
 
-function CmsForm({ isLogged, onSubmit }: CmsFormProps) {
-  const { handleChange, name } = useForm({ name: '' })
+const CmsForm: FC<CmsFormProps> = ({ isLogged, onSubmit, error }) => {
+  const [form, setForm] = useState({name: ''})
+  const [isError, setIsError] = useState(error)
 
+  useEffect(() => {
+    console.log(error, 'effect')
+    setIsError(error)
+  }, [error])
+
+  const validationsForm = (value: string) => {
+    if(value.length < 8){
+      setIsError({
+        state: true,
+        text: 'El usuario debe tener más de 8 caracteres'
+      })
+      return false
+    }
+    return true
+  } 
+
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target
+    setForm({
+      name: value
+    })
+
+    if( validationsForm(value )) {
+      setIsError({
+        state: false,
+        text: ''
+      })
+    }
+   }
+
+  const hasErrorForm = () => {
+    let hasError = false
+    let copyError  = { ...isError  }
+
+    if(form.name.length < 8){
+      copyError = {
+        ...copyError,
+          state: true,
+          text: 'El usuario debe tener más de 8 caracteres'
+        }
+      hasError = true
+    }
+    if(error.text === 'El usuario no existe'){
+      copyError = {
+        ...copyError,
+          state: true,
+          text: 'El usuario no existe'
+        }
+      hasError = true
+    }
+    if(error.text === 'El usuario ya existe'){
+      copyError = {
+        ...copyError,
+          state: true,
+          text: 'El usuario ya existe'
+        }
+      hasError = true
+    }
+    setIsError(copyError)
+    return hasError
+  }
 
   const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
-    onSubmit(name)
+    if(!hasErrorForm()) {
+      onSubmit(form.name)
+      console.log('submit', form)
+    } 
   }
-
 
   return (
     <Box
@@ -26,7 +95,6 @@ function CmsForm({ isLogged, onSubmit }: CmsFormProps) {
         background: 'rgba(109, 72, 122, 0.26)',
         boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
         backdropFilter: 'blur(4.9px)',
-        '-webkitBackdropFilter': 'blur(4.9px)',
         border: '1px solid rgba(109, 72, 122, 0.51)',
         borderRadius: '16px',
         display: 'flex',
@@ -64,15 +132,29 @@ function CmsForm({ isLogged, onSubmit }: CmsFormProps) {
         >
           {isLogged ? 'Por favor, ingrese a su cuenta' : ''}
         </Typography>
-        <TextField
+        <TextField          
           name="name"
           label="Nombre"
-          focused
+          value={form.name}
           sx={{
             "& .MuiInputBase-root": {
               color: 'primary.main'
+            },
+            "& .MuiInputBase-root:hover": {
+              backgroundColor: 'rgba(109, 72, 122, 0.26)',
+            },
+            "& .MuiInputBase-root.Mui-focused": {
+              backgroundColor: 'rgba(109, 72, 122, 0.26)',
+            },
+            ".css-1d3z3hw-MuiOutlinedInput-notchedOutline" : {
+              borderColor: 'primary.main'
+            },
+            "& label":{
+              color: 'primary.main'
             }
           }}
+          error={isError.state}
+          helperText={isError.text}
           onChange={handleChange}
         />
         <Button
@@ -129,7 +211,7 @@ function CmsForm({ isLogged, onSubmit }: CmsFormProps) {
             </Link>
           </Box>
           : ''
-      }
+        }
     </Box>
   )
 }

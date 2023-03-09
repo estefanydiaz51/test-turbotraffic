@@ -2,7 +2,7 @@ import { styled, Theme, CSSObject } from '@mui/material/styles'
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import {
   Dashboard as DashboardIcon, 
   AdminPanelSettings as Admin,
@@ -98,11 +98,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 
-type NavigatorProps = {
-  children: React.ReactNode
+interface NavigatorProps {
+  children: JSX.Element
 }
 
-function CmsNavigator({children } : NavigatorProps) {
+const  CmsNavigator: FC<NavigatorProps> = ({children }) =>{
   const [open, setOpen] = useState(true);
   const [user, setUser] = useState<any>({});
   const route = useRouter()
@@ -120,15 +120,10 @@ function CmsNavigator({children } : NavigatorProps) {
   ]
   useEffect(() => {
     const user = localStorage.getItem('auth')
-    const userPaser = user ? JSON.parse( user): {}
-    setUser(userPaser)
+    const userParser = user ? JSON.parse( user): {}
+    setUser(userParser)
   }, [])
   
-
-  const handleDrawerOpenClose = () => {
-    setOpen(!open);
-  };
-
   const handleLogout = () => {
     localStorage.removeItem('user')
     localStorage.removeItem('auth')

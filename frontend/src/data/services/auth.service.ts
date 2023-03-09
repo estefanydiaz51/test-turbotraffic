@@ -20,7 +20,7 @@ export class AuthService implements AuthRepository {
       .catch((error) => error)
   }
 
-  async findAuthByName(name: string): Promise<any> {
+  async findAuthByName(name: string): Promise<{}> {
     const response = await fetch(BASE_URL + Router.auth,
       {
         method: 'POST',
@@ -33,7 +33,7 @@ export class AuthService implements AuthRepository {
     return response
   }
 
-  async  createUser(name: string): Promise<any> {
+  async  createUser(name: string): Promise<{}> {
     const response = await fetch(BASE_URL + Router.new,
       {
         method: 'POST',

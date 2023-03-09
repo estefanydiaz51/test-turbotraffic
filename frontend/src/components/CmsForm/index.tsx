@@ -17,7 +17,6 @@ const CmsForm: FC<CmsFormProps> = ({ isLogged, onSubmit, error }) => {
   const [isError, setIsError] = useState(error)
 
   useEffect(() => {
-    console.log(error, 'effect')
     setIsError(error)
   }, [error])
 
@@ -83,7 +82,6 @@ const CmsForm: FC<CmsFormProps> = ({ isLogged, onSubmit, error }) => {
     event.preventDefault()
     if(!hasErrorForm()) {
       onSubmit(form.name)
-      console.log('submit', form)
     } 
   }
 

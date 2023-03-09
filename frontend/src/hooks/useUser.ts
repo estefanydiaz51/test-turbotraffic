@@ -12,7 +12,6 @@ export const useUser = () => {
 
   const getUsers = (token: string) => {
     useCase.call(token).then((users) => {
-      console.log(users)
       setData(users)
     }).catch(error => error)
   }

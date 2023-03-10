@@ -22,6 +22,7 @@ function Admin () {
   
   return render && (
     <CmsDashboard>
+      <div>
         <Typography paragraph>
           Admin
           Bienvenido
@@ -31,6 +32,7 @@ function Admin () {
             key={user.id} {...user} 
           />
         ) : ''}
+      </div>
     </CmsDashboard>
   )
 }

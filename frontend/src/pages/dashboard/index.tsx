@@ -7,7 +7,7 @@ function Dashboard (){
   return render && (
     <div>
       <CmsDashboard>
-        User Bienvenido 
+        <h1>User Bienvenido</h1>
       </CmsDashboard>
     </div>
   )

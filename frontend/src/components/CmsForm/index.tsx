@@ -133,6 +133,7 @@ const CmsForm: FC<CmsFormProps> = ({ isLogged, onSubmit, error }) => {
         <TextField          
           name="name"
           label="Nombre"
+          data-testid="name"
           value={form.name}
           sx={{
             "& .MuiInputBase-root": {

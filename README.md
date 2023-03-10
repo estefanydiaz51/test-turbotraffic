@@ -8,6 +8,14 @@ npm i
 npm run build && npm start
 ```
 
+
+# Para correr los tests 
+
+```
+npm run test 
+```
+
+
 Las rutas de acceso al frontend son:
 
 Ruta raiz:  [http://localhost:3000/login](http://localhost:3000/login)

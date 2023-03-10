@@ -9,7 +9,7 @@ npm run build && npm start
 ```
 
 
-# Para correr los tests 
+# Para correr las pruebas unitarias
 
 ```
 npm run test 
